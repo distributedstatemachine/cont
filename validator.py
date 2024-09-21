@@ -168,6 +168,7 @@ def main(config):
             time.sleep(5)  # Wait for a short period before retrying.
             continue
 
+
 def process_section_masks(
     model: LlamaForCausalLM,
     section_number: int,
@@ -450,7 +451,7 @@ if __name__ == "__main__":
         "--batch_size", type=int, default=4, help="Batch size for eval."
     )
     parser.add_argument(
-        "--netuid", type=int, default=212, help="Bittensor network uid."
+        "--netuid", type=int, default=218, help="Bittensor network uid."
     )
     parser.add_argument(
         "--device",
