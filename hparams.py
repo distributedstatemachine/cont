@@ -18,37 +18,41 @@
 from types import SimpleNamespace
 from transformers import AutoTokenizer, LlamaConfig
 
+
 def load_hparams() -> SimpleNamespace:
     hparams = {
         # Steps between full state syncing
-        'epoch_length': 25000,
+        "epoch_length": 25000,
         # Delta compression rate.
-        'compression': 300,
+        "compression": 300,
         # Global sequence length
-        'sequence_length': 2048,
+        "sequence_length": 2048,
         # AutoTokenizer name.
-        'tokenizer_name': 'gpt2',
+        "tokenizer_name": "gpt2",
         # Model arch.
-        'num_hidden_layers': 16,         # Layers
-        'hidden_size': 2048,             # Hidden Size
-        'intermediate_size': 8192,       # Intermediate Size
-        'num_attention_heads': 8,        # Attention Heads
-        'num_key_value_heads': 8,        # Key/Value Heads
-        'activation_function': "swiGLU", # Activation Function
-        'max_position_embeddings': 2048, # Positional Embeddings (RoPE)
+        "num_hidden_layers": 16,  # Layers
+        "hidden_size": 2048,  # Hidden Size
+        "intermediate_size": 8192,  # Intermediate Size
+        "num_attention_heads": 8,  # Attention Heads
+        "num_key_value_heads": 8,  # Key/Value Heads
+        "activation_function": "swiGLU",  # Activation Function
+        "max_position_embeddings": 2048,  # Positional Embeddings (RoPE)
+        "section_length": 100,
     }
     # Convert the dictionary to a SimpleNamespace
     hparams_ns = SimpleNamespace(**hparams)
-    hparams_ns.tokenizer = AutoTokenizer.from_pretrained( hparams_ns.tokenizer_name, verbose=False, clean_up_tokenization_spaces=True )
+    hparams_ns.tokenizer = AutoTokenizer.from_pretrained(
+        hparams_ns.tokenizer_name, verbose=False, clean_up_tokenization_spaces=True
+    )
     hparams_ns.tokenizer.pad_token = hparams_ns.tokenizer.eos_token
     hparams_ns.model_config = LlamaConfig(
-        vocab_size = hparams_ns.tokenizer.vocab_size,
-        hidden_size = hparams_ns.hidden_size,
-        num_hidden_layers = hparams_ns.num_hidden_layers,
-        num_attention_heads = hparams_ns.num_attention_heads,
-        intermediate_size = hparams_ns.intermediate_size,
-        num_key_value_heads = hparams_ns.num_key_value_heads,
-        activation_function = hparams_ns.activation_function,
-        max_position_embeddings = hparams_ns.max_position_embeddings,
+        vocab_size=hparams_ns.tokenizer.vocab_size,
+        hidden_size=hparams_ns.hidden_size,
+        num_hidden_layers=hparams_ns.num_hidden_layers,
+        num_attention_heads=hparams_ns.num_attention_heads,
+        intermediate_size=hparams_ns.intermediate_size,
+        num_key_value_heads=hparams_ns.num_key_value_heads,
+        activation_function=hparams_ns.activation_function,
+        max_position_embeddings=hparams_ns.max_position_embeddings,
     )
     return hparams_ns
